@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Dmitriy Tsvetkov](https://up.htmlacademy.ru/php/8/user/163387).
-* Наставник: `Неизвестно`.
+* Наставник: [Владимир Ульянов](https://htmlacademy.ru/profile/id135131).
 
 ---
 
