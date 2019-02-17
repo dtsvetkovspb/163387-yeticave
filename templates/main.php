@@ -24,8 +24,8 @@
                     <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$val['Name'];?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
-                            <span class="lot__amount"><?=$val['Price'];?></span>
-                            <span class="lot__cost">цена<b class="rub">р</b></span>
+                            <!--<span class="lot__amount"><?/*=$val['Price'];*/?></span>-->
+                            <span class="lot__cost"><?=formattedNum($val['Price']);?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
