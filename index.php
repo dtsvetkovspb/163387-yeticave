@@ -1,7 +1,7 @@
 <?php
 require_once('functions.php');
 
-$is_auth = rand(0, 1);
+$isAuth = rand(0, 1);
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
 $lots = [
     [
@@ -42,7 +42,15 @@ $lots = [
     ]
 ];
 
-$user_name = 'Dmitriy'; // укажите здесь ваше имя
+$userName = 'Dmitriy'; // укажите здесь ваше имя
+
+$now = strtotime('now');
+$tomorrow = strtotime('tomorrow midnight');
+$diff = $tomorrow - $now;
+
+$hours = floor($diff / 3600);
+$minutes = floor(($diff / 60) % 60);
+$timeToNextDay = $hours . ':' . $minutes;
 
 function formattedNum($num) {
     $intNum = ceil($num);
@@ -56,18 +64,21 @@ function formattedNum($num) {
 
 $page_content = include_template('main.php', [
     'categories' => $categories,
-    'lots' => $lots
+    'lots' => $lots,
+    'timeToNextDay' => $timeToNextDay
 ]);
 
 $layout_content = include_template('layout.php', [
     'categories' => $categories,
     'content' => $page_content,
     'title' => 'Главная',
-    'is_auth' => $is_auth,
-    'user_name' => $user_name
+    'isAuth' => $isAuth,
+    'userName' => $userName
 ]);
 
 echo $layout_content;
+
+
 
 
 

@@ -4,7 +4,7 @@
     <ul class="promo__list">
         <?php foreach ($categories as $key => $val): ?>
             <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?=$val;?></a>
+                <a class="promo__link" href="pages/all-lots.html"><?=htmlspecialchars($val);?></a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -17,18 +17,18 @@
         <?php foreach ($lots as $key => $val): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=$val['URL'];?>" width="350" height="260" alt="<?=$val['Name'];?>">
+                    <img src="<?=htmlspecialchars($val['URL']);?>" width="350" height="260" alt="<?=$val['Name'];?>">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$val['Category'];?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$val['Name'];?></a></h3>
+                    <span class="lot__category"><?=htmlspecialchars($val['Category']);?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=htmlspecialchars($val['Name']);?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <!--<span class="lot__amount"><?/*=$val['Price'];*/?></span>-->
-                            <span class="lot__cost"><?=formattedNum($val['Price']);?></span>
+                            <span class="lot__cost"><?=htmlspecialchars(formattedNum($val['Price']));?></span>
                         </div>
                         <div class="lot__timer timer">
-                            12:23
+                            <?=$timeToNextDay;?>
                         </div>
                     </div>
                 </div>
