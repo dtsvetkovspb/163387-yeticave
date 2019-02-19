@@ -43,29 +43,9 @@ $lots = [
 ];
 
 $userName = 'Dmitriy'; // укажите здесь ваше имя
-
-$now = strtotime('now');
-$tomorrow = strtotime('tomorrow midnight');
-$diff = $tomorrow - $now;
-
-$hours = floor($diff / 3600);
-$minutes = floor(($diff / 60) % 60);
-$timeToNextDay = $hours . ':' . $minutes;
-
-function formattedNum($num) {
-    $intNum = ceil($num);
-    if ($intNum < 1000) {
-        return $intNum . ' ₽';
-    } else {
-        $intNum = number_format($intNum, 0, ',', ' ');
-        return $intNum . ' ₽';
-    }
-}
-
 $page_content = include_template('main.php', [
     'categories' => $categories,
-    'lots' => $lots,
-    'timeToNextDay' => $timeToNextDay
+    'lots' => $lots
 ]);
 
 $layout_content = include_template('layout.php', [

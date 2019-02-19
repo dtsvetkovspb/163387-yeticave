@@ -28,7 +28,7 @@
                             <span class="lot__cost"><?=htmlspecialchars(formattedNum($val['Price']));?></span>
                         </div>
                         <div class="lot__timer timer">
-                            <?=$timeToNextDay;?>
+                            <?=timeToNextDay();?>
                         </div>
                     </div>
                 </div>
