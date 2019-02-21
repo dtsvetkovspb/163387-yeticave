@@ -1,7 +1,7 @@
 <?php
 require_once('functions.php');
 
-$is_auth = rand(0, 1);
+$isAuth = rand(0, 1);
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
 $lots = [
     [
@@ -42,18 +42,7 @@ $lots = [
     ]
 ];
 
-$user_name = 'Dmitriy'; // укажите здесь ваше имя
-
-function formattedNum($num) {
-    $intNum = ceil($num);
-    if ($intNum < 1000) {
-        return $intNum . ' ₽';
-    } else {
-        $intNum = number_format($intNum, 0, ',', ' ');
-        return $intNum . ' ₽';
-    }
-}
-
+$userName = 'Dmitriy'; // укажите здесь ваше имя
 $page_content = include_template('main.php', [
     'categories' => $categories,
     'lots' => $lots
@@ -63,11 +52,13 @@ $layout_content = include_template('layout.php', [
     'categories' => $categories,
     'content' => $page_content,
     'title' => 'Главная',
-    'is_auth' => $is_auth,
-    'user_name' => $user_name
+    'isAuth' => $isAuth,
+    'userName' => $userName
 ]);
 
 echo $layout_content;
+
+
 
 
 
