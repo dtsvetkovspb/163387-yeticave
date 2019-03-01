@@ -19,14 +19,14 @@ VALUES ('2019-02-20 10:30:00', 12000, 1, 1),
 
 SELECT name FROM categories;
 
-SELECT name, start_price, picture, start_price, cat_id FROM lots;
+SELECT name, start_price, picture, cat_id FROM lots;
 
 SELECT l.id, c.name
 FROM lots l
 JOIN categories c ON l.id = c.id
 WHERE l.id = 1;
 
-UPDATE lots SET name = 'name'
+UPDATE lots SET name = '2014 Rossignol District Snowboard'
 WHERE lots.id = 1;
 
 SELECT offer_price, lot_id FROM bets WHERE lot_id = 1;
