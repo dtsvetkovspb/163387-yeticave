@@ -7,7 +7,6 @@ $isAuth = rand(0, 1);
 $userName = 'Dmitriy';
 
 if (isset($_GET['id'])) {
-
     $categories = db_fetch_data($link, "SELECT name FROM categories");
 
     $id = mysqli_real_escape_string($link, $_GET['id']);
@@ -26,8 +25,6 @@ if (isset($_GET['id'])) {
 
         ]);
     }
-
-
 
 } else {
     http_response_code(404);
