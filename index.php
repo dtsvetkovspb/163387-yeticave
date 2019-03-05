@@ -18,7 +18,7 @@ $page_content = include_template('main.php', [
 $layout_content = include_template('layout.php', [
     'categories' => $categories,
     'content' => $page_content,
-    'title' => 'Главная',
+    'title' => 'YetiCave | Главная',
     'isAuth' => $isAuth,
     'userName' => $userName
 ]);
