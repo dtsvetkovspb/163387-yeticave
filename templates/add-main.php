@@ -23,9 +23,9 @@
 <form class="form form--add-lot container <?= count($errors) ? 'form--invalid' : ''; ?>" action="add.php" method="post" enctype="multipart/form-data">
     <h2>Добавление лота</h2>
     <div class="form__container-two">
+
        <?php $classname = isset($errors['lot-name']) ? "form__item--invalid" : "";
         $value = isset($lot['lot-name']) ? $lot['lot-name'] : "";?>
-
         <div class="form__item <?=$classname;?> ">
             <label for="lot-name">Наименование</label>
             <input id="lot-name" type="text"  name="lot-name" placeholder="Введите наименование лота" value="<?=$value;?>">
