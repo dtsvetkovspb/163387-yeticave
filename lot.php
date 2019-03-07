@@ -3,9 +3,6 @@ require_once 'functions.php';
 require_once 'init.php';
 require_once 'mysql_helper.php';
 
-$isAuth = rand(0, 1);
-$userName = 'Dmitriy';
-
 if (isset($_GET['id'])) {
     $categories = db_fetch_data($link, "SELECT name FROM categories");
 
@@ -36,9 +33,7 @@ if (isset($_GET['id'])) {
 $layout_content = include_template('layout.php', [
     'categories' => $categories,
     'content' => $page_content,
-    'title' => 'Лот',
-    'isAuth' => $isAuth,
-    'userName' => $userName
+    'title' => 'Лот'
 ]);
 
 echo $layout_content;
