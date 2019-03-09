@@ -3,8 +3,10 @@ require_once 'functions.php';
 require_once 'init.php';
 require_once 'mysql_helper.php';
 
-$isAuth = rand(0, 1);
-$userName = 'Dmitriy';
+if(!isset($_SESSION['user'])) {
+    http_response_code(403);
+    exit();
+}
 
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
@@ -73,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = db_get_prepare_stmt($link, $sql, [$lot['category'], $lot['lot-name'], $lot['description'], $lot['lot-rate'], $lot['lot-step'], $lot['lot-date'], $lot['path']]);
         $res = mysqli_stmt_execute($stmt);
 
+
         if ($res) {
             $lot_id = mysqli_insert_id($link);
 
@@ -89,9 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout_content = include_template('layout.php', [
     'categories' => $categories,
     'content' => $page_content,
-    'title' => 'YetiCave | Добавление лота',
-    'isAuth' => $isAuth,
-    'userName' => $userName
+    'title' => 'YetiCave | Добавление лота'
 ]);
 
 echo $layout_content;

@@ -8,8 +8,6 @@ $userName = 'Dmitriy';
 
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
-$tpl_data = [];
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $form = $_POST['signup'];
     $dict = ['email' => 'Email', 'password' => 'Пароль', 'user-name' => 'Имя пользователя', 'message' => 'Контактные данные', 'file' => 'Аватар'];
