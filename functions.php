@@ -27,25 +27,31 @@
         }
     }
 
-    function timeToNextDay() {
+    function timeDiff($unixtime) {
         $now = strtotime('now');
-        $tomorrow = strtotime('tomorrow midnight');
-        $diff = $tomorrow - $now;
+        $diff = $now - $unixtime;
+        $timeOfBet = date('d.m.y \в H:i', $unixtime);
+        $hoursDiff = floor($diff / 3600);
+        $minutesDiff = floor(($diff / 60) % 60);
 
-        $hours = floor($diff / 3600);
-        $minutes = floor(($diff / 60) % 60);
-
-        if ($hours < 10) {
-            $hours = '0' . $hours;
+        if ($hoursDiff < 1) {
+            return $minutesDiff . ' минут назад';
+        } else if ($hoursDiff >= 1 && $hoursDiff < 2) {
+            return 'Час назад';
+        } else {
+            return $timeOfBet ;
         }
-
-        if ($minutes < 10) {
-            $minutes = '0' . $minutes;
-        }
-
-        return $hours . ':' . $minutes;
     }
 
-    function isValidDate($date, $format= 'Y-m-d'){
+    function getHoursMinsDiff($unixtime) {
+        $now = strtotime('now');
+        $diff = $unixtime - $now ;
+        $hoursDiff = floor($diff / 3600);
+        $minutesDiff = floor(($diff / 60) % 60);
+
+        return $hoursDiff . ':' . $minutesDiff;
+    }
+
+    function isValidDate($date, $format = 'Y-m-d'){
         return $date == date($format, strtotime($date));
     }

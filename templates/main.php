@@ -28,7 +28,7 @@
                             <span class="lot__cost"><?=formattedNum($val['start_price']);?></span>
                         </div>
                         <div class="lot__timer timer">
-                            <?=timeToNextDay();?>
+                            <?=getHoursMinsDiff($val['UNIX_TIMESTAMP(exp_date)'])?>
                         </div>
                     </div>
                 </div>

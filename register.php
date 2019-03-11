@@ -3,9 +3,6 @@ require_once 'functions.php';
 require_once 'init.php';
 require_once 'mysql_helper.php';
 
-$isAuth = rand(0, 1);
-$userName = 'Dmitriy';
-
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -81,9 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'categories' => $categories,
-    'title' => 'YetiCave | Регистрация',
-    'isAuth' => $isAuth,
-    'userName' => $userName
+    'title' => 'YetiCave | Регистрация'
 ]);
 
 echo $layout_content;
