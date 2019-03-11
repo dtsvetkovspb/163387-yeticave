@@ -21,9 +21,9 @@ if (isset($_GET['id'])) {
     $betsCount = count($bets);
 
     $betStep = db_fetch_data($link, "SELECT bet_step FROM lots WHERE id = '$lotId'");
-    $betStep = $betStep[0]['bet_step'];
+    $betStep = isset($betStep[0]['bet_step']) ? $betStep[0]['bet_step'] : null;
     $startPrice = db_fetch_data($link, "SELECT start_price FROM lots WHERE id = '$lotId'");;
-    $startPrice = $startPrice[0]['start_price'];
+    $startPrice = isset($startPrice[0]['start_price']) ? $startPrice[0]['start_price'] : null;
     $currentPrice = db_fetch_data($link, "SELECT offer_price FROM bets WHERE lot_id = '$lotId'");
 
     $currentPrice ? $resPrice = max(array_column($currentPrice, 'offer_price')) : $resPrice = $startPrice;
@@ -46,14 +46,6 @@ if (isset($_GET['id'])) {
 
         }
 
-        $betStep = db_fetch_data($link, "SELECT bet_step FROM lots WHERE id = '$lotId'");
-        $betStep = $betStep[0]['bet_step'];
-        $startPrice = db_fetch_data($link, "SELECT start_price FROM lots WHERE id = '$lotId'");;
-        $startPrice = $startPrice[0]['start_price'];
-        $currentPrice = db_fetch_data($link, "SELECT offer_price FROM bets WHERE lot_id = '$lotId'");
-
-        $currentPrice ? $resPrice = max(array_column($currentPrice, 'offer_price')) : $resPrice = $startPrice;
-
         foreach ($form as $key => $value) {
             if ($key == 'cost' && $value) {
                 if (!filter_var($value, FILTER_VALIDATE_INT, array("options" => array("min_range"=> 0)))) {
@@ -69,7 +61,6 @@ if (isset($_GET['id'])) {
             $sql = 'INSERT INTO bets (date_add, offer_price, user_id, lot_ID) VALUES (NOW(), ?, ?, ?)';
 
             $stmt = db_get_prepare_stmt($link, $sql, [$form['cost'], $user['id'], $lotId]);
-
             mysqli_stmt_execute($stmt);
             header("Location: lot.php?id=" . $lotId);
         }

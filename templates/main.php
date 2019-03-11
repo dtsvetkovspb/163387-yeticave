@@ -24,7 +24,6 @@
                     <h3 class="lot__title"><a class="text-link" href="lot.php?id=<?=$val['id']?>"><?=$val['name'];?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
-                            <!--<span class="lot__amount"><?/*=$val['Price'];*/?></span>-->
                             <span class="lot__cost"><?=formattedNum($val['start_price']);?></span>
                         </div>
                         <div class="lot__timer timer">

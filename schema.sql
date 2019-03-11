@@ -17,28 +17,28 @@ CREATE TABLE lots (
     picture VARCHAR(128),
     start_price INT NOT NULL,
     exp_date DATETIME NOT NULL,
-    bet_step INT,
+    bet_step INT NOT NULL,
     user_id INT,
     winner_id VARCHAR(64),
-    cat_id INT
+    cat_id INT NOT NULL
 );
 
 CREATE TABLE bets (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     date_add    DATETIME NOT NULL,
     offer_price INT NOT NULL,
-    user_id     INT,
-    lot_id      INT
+    user_id     INT NOT NULL,
+    lot_id      INT NOT NULL
 );
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    registration_date DATETIME,
-    email VARCHAR(64) UNIQUE,
+    registration_date DATETIME NOT NULL,
+    email VARCHAR(64) UNIQUE NOT NULL,
     name VARCHAR(64) NOT NULL,
     password VARCHAR(255) NOT NULL,
     avatar VARCHAR(128),
-    contacts VARCHAR(128),
+    contacts VARCHAR(128) NOT NULL,
     created_lots VARCHAR(128),
     bets_id INT
 )
