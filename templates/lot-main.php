@@ -43,7 +43,6 @@
             <div class="lot-item__state">
                 <div class="lot-item__timer timer">
                     <?=getHoursMinsDiff($lot[0]['UNIX_TIMESTAMP(exp_date)'])?>
-
                 </div>
                 <div class="lot-item__cost-state">
                     <div class="lot-item__rate">

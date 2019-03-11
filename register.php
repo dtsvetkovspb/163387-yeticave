@@ -6,7 +6,7 @@ require_once 'mysql_helper.php';
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $form = $_POST['signup'];
+    $form = $_POST['signup'] ?? [];
     $dict = ['email' => 'Email', 'password' => 'Пароль', 'user-name' => 'Имя пользователя', 'message' => 'Контактные данные', 'file' => 'Аватар'];
     $errors = [];
     $required = ['email', 'password', 'name', 'message'];
