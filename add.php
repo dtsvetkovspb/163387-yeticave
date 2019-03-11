@@ -12,6 +12,7 @@ $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = $_POST;
+    $user = $_SESSION['user'] ?? [];
 
     $required = ['lot-name', 'category', 'description', 'lot-rate', 'lot-step', 'lot-date'];
     $dict = ['lot-name' => 'Название', 'category' => 'Категория', 'description' => 'Описание', 'file' => 'Картинка', 'lot-rate' => 'Стартовая цена', 'lot-step' => 'Шаг ставки', 'lot-date' => 'Дата окончания аукциона'];
@@ -70,9 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $page_content = include_template('add-main.php', ['categories' => $categories, 'lot' => $lot, 'errors' => $errors, 'dict' => $dict]);
     } else {
 
-        $sql = 'INSERT INTO lots (dt_add, cat_id, name, description, user_id, start_price, bet_step, exp_date, picture) VALUES (NOW(), ?, ?, ?, 1, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO lots (dt_add, cat_id, name, description, user_id, start_price, bet_step, exp_date, picture) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        $stmt = db_get_prepare_stmt($link, $sql, [$lot['category'], $lot['lot-name'], $lot['description'], $lot['lot-rate'], $lot['lot-step'], $lot['lot-date'], $lot['path']]);
+        $stmt = db_get_prepare_stmt($link, $sql, [$lot['category'], $lot['lot-name'], $lot['description'], $user['id'], $lot['lot-rate'], $lot['lot-step'], $lot['lot-date'], $lot['path']]);
         $res = mysqli_stmt_execute($stmt);
 
 
