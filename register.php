@@ -3,6 +3,7 @@ require_once 'functions.php';
 require_once 'init.php';
 require_once 'mysql_helper.php';
 
+$showCategories = true;
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dict = ['email' => 'Email', 'password' => 'Пароль', 'user-name' => 'Имя пользователя', 'message' => 'Контактные данные', 'file' => 'Аватар'];
     $errors = [];
     $required = ['email', 'password', 'name', 'message'];
-    $isAvatar = false;
+    $isAvatarExist = false;
 
     foreach ($required as $field) {
         if (empty($form[$field])) {
@@ -27,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_FILES['avatar']) && $_FILES["avatar"]["error"] === 0) {
-        $tmp_name = $_FILES['avatar']['tmp_name'];
-        $path = $_FILES['avatar']['name'];
+        $tmp_name = isset($_FILES['avatar']['tmp_name']) ? $_FILES['avatar']['tmp_name'] : null;
+        $path = isset($_FILES['avatar']['name']) ? $_FILES['avatar']['name'] : null;
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
 
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             move_uploaded_file($tmp_name, 'img/' . $path);
             $form['path'] = 'img/'. $path;
-            $isAvatar = true;
+            $isAvatarExist = true;
         }
     }
 
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $password = password_hash($form['password'], PASSWORD_DEFAULT);
 
-        if (!$isAvatar) {
+        if (!$isAvatarExist) {
             $sql = 'INSERT INTO users (registration_date, email, name, password, contacts) VALUES (NOW(), ?, ?, ?, ?)';
             $stmt = db_get_prepare_stmt($link, $sql, [$form['email'], $form['name'], $password, $form['message']]);
         } else {
@@ -78,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'categories' => $categories,
-    'title' => 'YetiCave | Регистрация'
+    'title' => 'YetiCave | Регистрация',
+    'showCategories' => $showCategories
 ]);
 
 echo $layout_content;

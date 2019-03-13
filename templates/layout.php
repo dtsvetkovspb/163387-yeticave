@@ -8,7 +8,6 @@
 </head>
 <body>
 <div class="page-wrapper">
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
@@ -45,8 +44,20 @@
             </nav>
         </div>
     </header>
-
-    <main class="container"><?= $content; ?></main>
+    <main class="container">
+        <?php if ($showCategories) :?>
+            <nav class="nav">
+                <ul class="nav__list container">
+                    <?php foreach ($categories as $cat): ?>
+                        <li class="nav__item">
+                            <a href="pages/all-lots.html"><?= htmlspecialchars($cat['name']); ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
+        <?php endif;?>
+        <?= $content; ?>
+    </main>
 </div>
 
 <footer class="main-footer">
@@ -54,7 +65,7 @@
         <ul class="nav__list container">
             <?php foreach ($categories as $cat): ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?= $cat['name']; ?></a>
+                    <a href="pages/all-lots.html"><?= htmlspecialchars($cat['name']); ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

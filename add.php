@@ -3,6 +3,8 @@ require_once 'functions.php';
 require_once 'init.php';
 require_once 'mysql_helper.php';
 
+$showCategories = true;
+
 if(!isset($_SESSION['user'])) {
     http_response_code(403);
     exit();
@@ -50,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if (isset($_FILES['lot-img']) && $_FILES["lot-img"]["error"] === 0) {
-        $tmp_name = $_FILES['lot-img']['tmp_name'];
-        $path = $_FILES['lot-img']['name'];
+        $tmp_name = isset($_FILES['lot-img']['tmp_name']) ? $_FILES['lot-img']['tmp_name'] : null;
+        $path = isset($_FILES['lot-img']['name']) ? $_FILES['lot-img']['name'] : null;
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
 
@@ -73,9 +75,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $sql = 'INSERT INTO lots (dt_add, cat_id, name, description, user_id, start_price, bet_step, exp_date, picture) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        $stmt = db_get_prepare_stmt($link, $sql, [$lot['category'], $lot['lot-name'], $lot['description'], $user['id'], $lot['lot-rate'], $lot['lot-step'], $lot['lot-date'], $lot['path']]);
-        $res = mysqli_stmt_execute($stmt);
+        $userId = isset($user['id']) ? $user['id'] : null;
+        $lotCategory = isset($lot['category']) ? $lot['category'] : null;
+        $lotName = isset($lot['lot-name']) ? $lot['lot-name'] : null;
+        $lotDescription = isset($lot['description']) ? $lot['description'] : null;
+        $lotRate = isset($lot['lot-rate']) ? $lot['lot-rate'] : null;
+        $lotStep = isset($lot['lot-step']) ? $lot['lot-step'] : null;
+        $lotDate = isset($lot['lot-date']) ? $lot['lot-date'] : null;
+        $lotPath = isset($lot['path']) ? $lot['path'] : null;
 
+        $stmt = db_get_prepare_stmt($link, $sql, [$lotCategory, $lotName, $lotDescription, $userId, $lotRate, $lotStep, $lotDate, $lotPath]);
+        $res = mysqli_stmt_execute($stmt);
 
         if ($res) {
             $lot_id = mysqli_insert_id($link);
@@ -93,7 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $layout_content = include_template('layout.php', [
     'categories' => $categories,
     'content' => $page_content,
-    'title' => 'YetiCave | Добавление лота'
+    'title' => 'YetiCave | Добавление лота',
+    'showCategories' => $showCategories
 ]);
 
 echo $layout_content;

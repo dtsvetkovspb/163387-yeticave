@@ -3,6 +3,7 @@ require_once 'functions.php';
 require_once 'init.php';
 require_once 'mysql_helper.php';
 
+$showCategories = true;
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -63,7 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'categories' => $categories,
-    'title' => 'YetiCave | Страница входа'
+    'title' => 'YetiCave | Страница входа',
+    'showCategories' => $showCategories
 ]);
 
 echo $layout_content;
