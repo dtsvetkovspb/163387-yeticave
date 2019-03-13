@@ -5,7 +5,7 @@ require_once 'mysql_helper.php';
 
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form = $_POST['signup'] ?? [];
     $dict = ['email' => 'Email', 'password' => 'Пароль', 'user-name' => 'Имя пользователя', 'message' => 'Контактные данные', 'file' => 'Аватар'];
     $errors = [];
@@ -19,14 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     foreach ($form as $key => $value) {
-        if ($key == 'email') {
+        if ($key === 'email') {
             if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                 $errors[$key] = 'Не правильный email';
             }
         }
     }
 
-    if (isset($_FILES['avatar']) && $_FILES["avatar"]["error"] == 0) {
+    if (isset($_FILES['avatar']) && $_FILES["avatar"]["error"] === 0) {
         $tmp_name = $_FILES['avatar']['tmp_name'];
         $path = $_FILES['avatar']['name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);

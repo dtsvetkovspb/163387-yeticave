@@ -27,6 +27,11 @@
                         <p><?= $_SESSION['user']['name'];?></p>
                         <a href="logout.php">Выход</a>
                     </div>
+                    <?php if (isset($_SESSION['user']['avatar'])): ?>
+                        <div class="user-menu__image">
+                            <img src="<?=$_SESSION['user']['avatar']?>" alt="avatar">
+                        </div>
+                    <?php endif; ?>
                 <?php else: ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">

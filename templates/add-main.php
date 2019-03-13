@@ -54,7 +54,9 @@
         <textarea id="description" name="description" placeholder="Напишите описание лота"><?=$value;?></textarea>
         <span class="form__error">Напишите описание лота</span>
     </div>
-    <div class="form__item form__item--file"> <!-- form__item--uploaded -->
+
+    <?php $classname = isset($errors['file']) ? "form__item--invalid" : "";?>
+    <div class="form__item form__item--file <?=$classname;?>"> <!-- form__item--uploaded -->
         <label>Изображение</label>
         <div class="preview">
             <button class="preview__remove" type="button">x</button>
@@ -68,7 +70,7 @@
                 <span>+ Добавить</span>
             </label>
         </div>
-            <span class="form__error">Заполните значение</span>
+            <span class="form__error"><?=$dict['file'];?>: <?=$errors['file']?></span>
     </div>
     <div class="form__container-three">
         <?php $classname = isset($errors['lot-rate']) ? "form__item--invalid" : "";

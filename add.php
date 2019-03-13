@@ -10,7 +10,7 @@ if(!isset($_SESSION['user'])) {
 
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lot = $_POST;
     $user = $_SESSION['user'] ?? [];
 
@@ -26,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($_POST as $key => $value) {
 
-        if ($key == 'lot-step' || $key == 'lot-rate') {
+        if ($key === 'lot-step' || $key === 'lot-rate') {
             if (!filter_var($value, FILTER_VALIDATE_INT, array("options" => array("min_range"=> 0)))) {
                 $errors[$key] = 'Содержимое поля должно быть целым числом больше ноля';
             }
         }
 
-        if ($key == 'lot-date') {
+        if ($key === 'lot-date') {
 
 
             if (isValidDate($value, 'd-m-Y')) {
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-    if (isset($_FILES['lot-img']) && $_FILES["lot-img"]["error"] == 0) {
+    if (isset($_FILES['lot-img']) && $_FILES["lot-img"]["error"] === 0) {
         $tmp_name = $_FILES['lot-img']['tmp_name'];
         $path = $_FILES['lot-img']['name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);

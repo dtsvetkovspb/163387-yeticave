@@ -3,16 +3,22 @@ require_once 'functions.php';
 require_once 'init.php';
 require_once 'mysql_helper.php';
 
-if (isset($_GET['id'])) {
+if (isset($_GET['id']) && !empty($_GET['id'])) {
     $categories = db_fetch_data($link, "SELECT name FROM categories");
     $user = $_SESSION['user'] ?? [];
 
     $lotId = mysqli_real_escape_string($link, $_GET['id']);
-    $sql = "SELECT lots.name, c.name AS cat_name, start_price, picture, UNIX_TIMESTAMP(exp_date) FROM lots JOIN categories c ON c.id = cat_id WHERE lots.id = '%s'";
+    $sql = "SELECT lots.name, description, c.name AS cat_name, start_price, picture, UNIX_TIMESTAMP(exp_date) FROM lots JOIN categories c ON c.id = cat_id WHERE lots.id = '%s'";
 
     $sql = sprintf($sql, $lotId);
 
     $lot = db_fetch_data($link, $sql);
+
+    if(!$lot) {
+        http_response_code(404);
+        header('Location: 404.php');
+        exit();
+    }
 
     $sql2 = "SELECT offer_price, UNIX_TIMESTAMP(date_add), u.name FROM bets JOIN users u ON u.id = user_id WHERE bets.lot_id = '%s'";
 
@@ -31,7 +37,7 @@ if (isset($_GET['id'])) {
     $required = ['cost'];
     $errors = [];
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $form = $_POST;
         $lotId = mysqli_real_escape_string($link, $form['lotId']);
@@ -47,7 +53,7 @@ if (isset($_GET['id'])) {
         }
 
         foreach ($form as $key => $value) {
-            if ($key == 'cost' && $value) {
+            if ($key === 'cost' && $value) {
                 if (!filter_var($value, FILTER_VALIDATE_INT, array("options" => array("min_range"=> 0)))) {
                     $errors['cost'] = 'Содержимое поля должно быть целым числом больше ноля';
                 }
@@ -62,7 +68,7 @@ if (isset($_GET['id'])) {
 
             $stmt = db_get_prepare_stmt($link, $sql, [$form['cost'], $user['id'], $lotId]);
             mysqli_stmt_execute($stmt);
-            header("Location: lot.php?id=" . $lotId);
+            echo "<meta http-equiv='refresh' content='0'>";
         }
     }
 
@@ -76,6 +82,10 @@ if (isset($_GET['id'])) {
         'errors' => $errors
     ]);
 
+} else {
+    http_response_code(404);
+    header('Location: 404.php');
+    exit();
 }
 
 $layout_content = include_template('layout.php', [
@@ -84,10 +94,6 @@ $layout_content = include_template('layout.php', [
     'title' => 'Лот'
 ]);
 
-if (!$lotId) {
-    http_response_code(404);
-    header('Location: 404.php');
-    exit();
-}
+
 echo $layout_content;
 

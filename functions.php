@@ -21,10 +21,10 @@
         $intNum = ceil($num);
         if ($intNum < 1000) {
             return $intNum . ' ₽';
-        } else {
-            $intNum = number_format($intNum, 0, ',', ' ');
-            return $intNum . ' ₽';
         }
+
+        $intNum = number_format($intNum, 0, ',', ' ');
+        return $intNum . ' ₽';
     }
 
     function timeDiff($unixtime) {
@@ -36,11 +36,12 @@
 
         if ($hoursDiff < 1) {
             return $minutesDiff . ' минут назад';
-        } else if ($hoursDiff >= 1 && $hoursDiff < 2) {
-            return 'Час назад';
-        } else {
-            return $timeOfBet ;
         }
+        if ($hoursDiff >= 1 && $hoursDiff < 2) {
+            return 'Час назад';
+        }
+
+        return $timeOfBet ;
     }
 
     function getHoursMinsDiff($unixtime) {
@@ -53,5 +54,5 @@
     }
 
     function isValidDate($date, $format = 'Y-m-d'){
-        return $date == date($format, strtotime($date));
+        return $date === date($format, strtotime($date));
     }

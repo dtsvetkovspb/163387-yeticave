@@ -19,7 +19,7 @@ CREATE TABLE lots (
     exp_date DATETIME NOT NULL,
     bet_step INT NOT NULL,
     user_id INT,
-    winner_id VARCHAR(64),
+    winner_id INT,
     cat_id INT NOT NULL
 );
 

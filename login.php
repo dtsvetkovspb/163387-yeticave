@@ -5,7 +5,7 @@ require_once 'mysql_helper.php';
 
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form = $_POST;
 
     $required = ['email', 'password'];
@@ -17,21 +17,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    $email = mysqli_real_escape_string($link, $form['email']);
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $res = mysqli_query($link, $sql);
-
-    $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
-
-    if (!count($errors) && $user) {
-        if (password_verify($form['password'], $user['password'])) {
-            $_SESSION['user'] = $user;
-
-        } else {
-            $errors['password'] = 'Неверный пароль';
+    foreach ($form as $key => $value) {
+        if ($key === 'email') {
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                $errors[$key] = 'Не правильный email';
+            }
         }
-    } else {
-        $errors['email'] = 'Такой пользователь не найден';
+    }
+
+    if (!count($errors)) {
+        $email = mysqli_real_escape_string($link, $form['email']);
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $res = mysqli_query($link, $sql);
+
+        $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+
+        if (!count($errors) && $user) {
+
+            if (password_verify($form['password'], $user['password'])) {
+                $_SESSION['user'] = $user;
+
+            } else {
+                $errors['password'] = 'Неверный пароль';
+            }
+        } else {
+            $errors['email'] = 'Такой пользователь не найден';
+        }
     }
 
     if (count($errors)) {
