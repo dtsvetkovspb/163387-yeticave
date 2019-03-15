@@ -1,4 +1,4 @@
-<form class="form container <?= count($errors) ? 'form--invalid' : ''; ?>" action="register.php" method="post" enctype="multipart/form-data">
+<form class="form container <?= isset($errors) ? 'form--invalid' : ''; ?>" action="register.php" method="post" enctype="multipart/form-data">
     <h2>Регистрация нового аккаунта</h2>
 
     <?php $classname = isset($errors['email']) ? "form__item--invalid" : "";
@@ -6,11 +6,12 @@
     <div class="form__item <?= $classname; ?>"> <!-- form__item--invalid -->
         <label for="email">E-mail*</label>
         <input id="email" type="text" name="signup[email]" placeholder="Введите e-mail" value="<?=$value;?>" >
-        <span class="form__error"><?=$dict['email'];?>: <?=$errors['email'];?></span>
+        <span class="form__error"><?= isset($dict['email']) ? $dict['email'] : "";?>: <?= isset($errors['email']) ? $errors['email'] : ""; ?></span>
     </div>
 
     <?php $classname = isset($errors['password']) ? "form__item--invalid" : "";
     $value = isset($form['password']) ? htmlspecialchars($form['password']) : "";?>
+
     <div class="form__item <?= $classname; ?>">
         <label for="password">Пароль*</label>
         <input id="password" type="text" name="signup[password]" placeholder="Введите пароль" >

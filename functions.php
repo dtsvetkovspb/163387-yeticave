@@ -50,6 +50,10 @@
         $hoursDiff = floor($diff / 3600);
         $minutesDiff = floor(($diff / 60) % 60);
 
+        if ($minutesDiff < 10) {
+            $minutesDiff = '0' . $minutesDiff;
+        }
+
         return $hoursDiff . ':' . $minutesDiff;
     }
 

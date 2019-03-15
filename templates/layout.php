@@ -23,12 +23,12 @@
             <nav class="user-menu">
                 <?php if (isset($_SESSION['user'])): ?>
                     <div class="user-menu__logged">
-                        <p><?= $_SESSION['user']['name'];?></p>
+                        <p><?= isset($_SESSION['user']['name']) ? $_SESSION['user']['name'] : "";?></p>
                         <a href="logout.php">Выход</a>
                     </div>
                     <?php if (isset($_SESSION['user']['avatar'])): ?>
                         <div class="user-menu__image">
-                            <img src="<?=$_SESSION['user']['avatar']?>" alt="avatar">
+                            <img src="<?=isset($_SESSION['user']['avatar']) ? $_SESSION['user']['avatar'] : "#"?>" alt="avatar">
                         </div>
                     <?php endif; ?>
                 <?php else: ?>
@@ -50,7 +50,7 @@
                 <ul class="nav__list container">
                     <?php foreach ($categories as $cat): ?>
                         <li class="nav__item">
-                            <a href="pages/all-lots.html"><?= htmlspecialchars($cat['name']); ?></a>
+                            <a href="pages/all-lots.html"><?= isset($cat['name']) ? htmlspecialchars($cat['name']) : ""; ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -65,7 +65,7 @@
         <ul class="nav__list container">
             <?php foreach ($categories as $cat): ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?= htmlspecialchars($cat['name']); ?></a>
+                    <a href="pages/all-lots.html"><?= isset($cat['name']) ? htmlspecialchars($cat['name']) : ""; ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

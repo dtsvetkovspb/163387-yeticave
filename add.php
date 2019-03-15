@@ -4,15 +4,12 @@ require_once 'init.php';
 require_once 'mysql_helper.php';
 
 $showCategories = true;
-
-if(!isset($_SESSION['user'])) {
-    http_response_code(403);
-    exit();
-}
-
 $categories = db_fetch_data($link, 'SELECT name, id FROM categories');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (!isset($_SESSION['user'])) {
+    http_response_code(403);
+    $page_content = include_template('no-auth.php', []);
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lot = $_POST;
     $user = $_SESSION['user'] ?? [];
 

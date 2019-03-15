@@ -1,4 +1,4 @@
-<form class="form form--add-lot container <?= count($errors) ? 'form--invalid' : ''; ?>" action="add.php" method="post" enctype="multipart/form-data">
+<form class="form form--add-lot container <?= isset($errors) ? 'form--invalid' : ''; ?>" action="add.php" method="post" enctype="multipart/form-data">
     <h2>Добавление лота</h2>
     <div class="form__container-two">
 
@@ -7,7 +7,7 @@
         <div class="form__item <?=$classname;?> ">
             <label for="lot-name">Наименование</label>
             <input id="lot-name" type="text"  name="lot-name" placeholder="Введите наименование лота" value="<?=$value;?>">
-            <span class="form__error"><?=$dict['lot-name'];?>: <?=$errors['lot-name'];?></span>
+            <span class="form__error"><?=isset($dict['lot-name']) ? $dict['lot-name'] : "";?>: <?=isset($errors['lot-name']) ? $errors['lot-name'] : "";?></span>
         </div>
 
         <?php $classname = isset($errors['category']) ? "form__item--invalid" : "";
@@ -16,12 +16,12 @@
             <label for="category">Категория</label>
             <select id="category" name="category" >
 
-                <option value="<?= $value; ?>"><?= $value == '' ? 'Выберите категорию' : htmlspecialchars($categories[$value - 1]['name'])?></option>
+                <option value="<?= $value; ?>"><?= $value === '' ? 'Выберите категорию' : htmlspecialchars($categories[$value - 1]['name'])?></option>
                 <?php foreach ($categories as $cat): ?>
-                    <option value="<?=htmlspecialchars($cat['id'])?>"><?=htmlspecialchars($cat['name'])?></option>
+                    <option value="<?=isset($cat['id']) ? htmlspecialchars($cat['id']) : ""?>"><?=isset($cat['name']) ? htmlspecialchars($cat['name']) : ""?></option>
                 <?php endforeach; ?>
             </select>
-            <span class="form__error"><?=$dict['category'];?>: <?=$errors['category'];?></span>
+            <span class="form__error"><?=isset($dict['category']) ? $dict['category'] : "";?>: <?=isset($errors['category']) ? $errors['category'] : "";?></span>
         </div>
     </div>
 
@@ -48,7 +48,7 @@
                 <span>+ Добавить</span>
             </label>
         </div>
-            <span class="form__error"><?=$dict['file'];?>: <?=$errors['file']?></span>
+            <span class="form__error"><?=isset($dict['file']) ? $dict['file'] : "";?>: <?=isset($errors['file']) ? $errors['file'] : ""?></span>
     </div>
     <div class="form__container-three">
         <?php $classname = isset($errors['lot-rate']) ? "form__item--invalid" : "";
@@ -56,7 +56,7 @@
         <div class="form__item form__item--small <?=$classname;?>">
             <label for="lot-rate">Начальная цена</label>
             <input id="lot-rate" type="number" name="lot-rate" placeholder="0" value="<?=$value;?>">
-            <span class="form__error"><?=$dict['lot-rate'];?>: <?=$errors['lot-rate'];?></span>
+            <span class="form__error"><?=isset($dict['lot-rate']) ? $dict['lot-rate'] : "";?>: <?=isset($errors['lot-rate']) ? $errors['lot-rate'] : "";?></span>
         </div>
 
         <?php $classname = isset($errors['lot-step']) ? "form__item--invalid" : "";
@@ -64,7 +64,7 @@
         <div class="form__item form__item--small <?=$classname;?>">
             <label for="lot-step">Шаг ставки</label>
             <input id="lot-step" type="number" name="lot-step" placeholder="0" value="<?=$value;?>">
-            <span class="form__error"><?=$dict['lot-step'];?>: <?=$errors['lot-step'];?></span>
+            <span class="form__error"><?=isset($dict['lot-step']) ? $dict['lot-step'] : "";?>: <?=isset($errors['lot-step']) ? $errors['lot-step'] : "";?></span>
         </div>
 
         <?php $classname = isset($errors['lot-date']) ? "form__item--invalid" : "";
@@ -72,8 +72,9 @@
         <div class="form__item <?=$classname;?>">
             <label for="lot-date">Дата окончания торгов</label>
             <input class="form__input-date" id="lot-date" type="date" name="lot-date" value="<?=$value;?>">
-            <span class="form__error"><?=$dict['lot-date'];?>: <?=$errors['lot-date'];?></span>
+            <span class="form__error"><?=isset($dict['lot-date']) ? $dict['lot-date'] : "";?>: <?=isset($errors['lot-date']) ? $errors['lot-date'] : "";?></span>
         </div>
+
     </div>
     <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
     <button type="submit" class="button">Добавить лот</button>
